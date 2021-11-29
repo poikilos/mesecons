@@ -6,6 +6,16 @@ function mesecon.move_node(pos, newpos)
 	minetest.get_meta(pos):from_table(meta)
 end
 
+if table.insert_all == nil then
+	-- Monkeypatch lua in case the method is missing.
+	table.insert_all = function (t, other)
+		for i=1, #other do
+			t [#t + 1] = other [i]
+		end
+		return t
+	end
+end
+
 -- Rules rotation Functions:
 function mesecon.rotate_rules_right(rules)
 	local nr = {}
